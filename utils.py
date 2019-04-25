@@ -82,7 +82,7 @@ def set_hostname(ip,vm_name=settings.HOSTNAMEPRE):
 def set_netsh(ip,gateway):
     file_path=os.path.join(settings.ISO_ROOT,'init','net.sh')
     with open(file_path,'w',encoding='utf-8')as f:
-        f.write('echo -e "DEVICE=eth0\\nBOOTPROTO=static\\nONBOOT=yes\\nPREFIX=23\\nIPADDR=%s\\nGATEWAY=%s\\nDNS1=202.206.0.20\\n">/mnt/sysimage/etc/sysconfig/network-scripts/ifcfg-eth0'%(ip,gateway))
+        f.write('echo -e "DEVICE=eth0\\nBOOTPROTO=static\\nONBOOT=yes\\nPREFIX=23\\nIPADDR=%s\\nGATEWAY=%s\\nDNS1=114.114.114.114\\n">/mnt/sysimage/etc/sysconfig/network-scripts/ifcfg-eth0'%(ip,gateway))
 
 # if __name__ == '__main__':
 #     res=get_args('http://127.0.0.1:8000/api/v1/vmhost/?vm_audit=1&vm_installed=0')

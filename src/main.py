@@ -39,6 +39,7 @@ def run():
                         starting=False
                     else:
                         time.sleep(10)
+                logger.info('Successful 机房:%s 虚拟机:%s 装机成功'%(item["room_name"],item["vm_name"]))
             except Exception as e:
                 logger.error('机房:%s 虚拟机:%s 装机失败，请查看失败原因并手动删除主机 %s'%(item["room_name"],item["vm_name"],e))
                 continue

@@ -10,21 +10,20 @@ firewalld_selinux () {
 # Dns
 Dns () {
 	cat > /etc/resolv.conf << -EOF
-nameserver 202.106.0.20
+nameserver 114.114.114.114
 options timeout:2 attempts:1
 -EOF
-	chattr +i /etc/resolv.conf #防止NetworkManager刷dns
+	# chattr +i /etc/resolv.conf #防止NetworkManager刷dns
 }
 
-#安装必须软件
+#安装软件
 Install_pack () {
 	yum clean all
 	yum makecache
-	wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-	yum groupinstall -y "Compatibility Libraries" "Development Tools" font
-	yum -y install wget epel-release yum-plugin-priorities openssh-clients openssh openssl openssl-devel zlib zlib-devel vim lsof git unzip lrzsz htop ntpdate net-tools rsync telnet
+	yum -y install wget epel-release zlib zlib-devel bash-completion vim lsof git unzip lrzsz htop ntpdate net-tools rsync telnet
 	wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 	wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+	wget -O /etc/yum.repos.d/docker-ce.repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 }
 
 
@@ -39,8 +38,8 @@ Ulimit () {
 
 # 关闭不必要的服务
 Shut_service () {
-	SvcDisable=(NetworkManager atd abrtd abrt-ccpp abrt-oops abrt-vmcore smartd abrt-xorg postfix tuned rpcbind)
-	for x in `echo ${SvcDisable[@]}`;do
+	SvcDisable=(NetworkManager postfix)
+	for x in ${SvcDisable[@]};do
   		systemctl stop $x
   		systemctl disable $x
 	done
@@ -174,29 +173,20 @@ Others_vir () {
 }
 
 Physical () {
-	firewalld_selinux
-	Dns
 	Install_pack
-	Hostname
-	System_env
-	Delete_user
-	Add_user
-	Make_dir
 	Ulimit
 	Shut_service
-	Add_key
-	Rngd
 	Kernel
 	Ntp_crond
 	Config_sshd
-	Jarctl
 	History
-	Jdk
 	Others_phy
 }
 
 Virtual () {
+    Install_pack
     Ulimit
+    Shut_service
     Kernel
     Ntp_crond
     Config_sshd

@@ -35,7 +35,7 @@ chmod +x /usr/bin/govc
 }
 ```
 # 打包 iso 命令
-yum -y install genisoimage
+yum -y install genisoimage sshpass
 ```
 genisoimage -v -cache-inodes -joliet-long -R -J -T -V CentOS7 -o "/mnt/CentOS-7-x86_64_my-DVD-1804.iso" -c isolinux/boot.cat -b isolinux/isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -b images/efiboot.img -no-emul-boot /opt/dvd_iso
 ```
