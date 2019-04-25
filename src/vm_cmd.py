@@ -13,11 +13,11 @@ class AutoVM(object):
         self.ds=ds
         self.vm_ip=vm_ip
         self.vm_gateway=vm_gateway
-        if not vm_cpu.isdigit():raise Exception('vm_cpu must be number')
+        if not str(vm_cpu).isdigit():raise Exception('vm_cpu must be number')
         self.vm_cpu=int(vm_cpu)
-        if not vm_mem.isdigit():raise Exception('vm_mem must be number')
+        if not str(vm_mem).isdigit():raise Exception('vm_mem must be number')
         self.vm_mem=int(vm_mem)*1024
-        if not vm_disk.isdigit(): raise Exception('vm_disk must be number')
+        if not str(vm_disk).isdigit(): raise Exception('vm_disk must be number')
         self.vm_disk=str(vm_disk)+'GB'
         self.vm_name=vm_name
         self.operator=operator

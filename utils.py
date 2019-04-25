@@ -72,7 +72,7 @@ def judgment_on(ip):
 def set_hostname(ip,vm_name=settings.HOSTNAMEPRE):
     ks_path=os.path.join(settings.ISO_ROOT,'isolinux','ks.cfg')
     v1,v2,v3,v4=ip.split('.')
-    hostname=('-').join(vm_name,v2,v3,v4)
+    hostname=('-').join((vm_name,v2,v3,v4))
     set_name='sed -i "s/network --hostname=.*/network --hostname=%s/" %s'%(hostname,ks_path)
     stdout,stderr=bash(set_name)
     if stderr:

@@ -16,7 +16,7 @@ def run():
         for item in install_li:
             starting=True
             try:
-                vm_obj=AutoVM(item["root_name"],item["host_ip"],item["datastore"],item["vm_ip"],item["vm_gateway"],item["vm_cpu"],item["vm_memory"],item["vm_disk"],item["vm_name"],item["vm_proposer"],item["id"])
+                vm_obj=AutoVM(item["room_name"],item["host_ip"],item["datastore"],item["vm_ip"],item["vm_gateway"],item["vm_cpu"],item["vm_memory"],item["vm_disk"],item["vm_name"],item["vm_proposer"],item["id"])
                 # 创建虚拟机
                 vm_obj.create_VM()
                 # 启用cpu mem热插拔
@@ -40,7 +40,7 @@ def run():
                     else:
                         time.sleep(10)
             except Exception as e:
-                logger.error('机房:%s 虚拟机:%s 装机失败，请查看失败原因并手动删除主机 %s'%(item["root_name"],item["vm_name"],e))
+                logger.error('机房:%s 虚拟机:%s 装机失败，请查看失败原因并手动删除主机 %s'%(item["room_name"],item["vm_name"],e))
                 continue
 
 
