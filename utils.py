@@ -1,0 +1,79 @@
+import requests
+import subprocess
+import logging.config
+import settings
+import json
+
+def get_args(url):
+    """
+    get
+    url='http://127.0.0.1:8000/api/v1/vmhost/?vm_audit=1&vm_installed=0'
+    :param url:
+    :return:
+    """
+    response=requests.get(url)
+    return response.json()
+
+def patch_installed(url):
+    """
+    patch {"vm_installed": 1}
+    url='http://127.0.0.1:8000/api/v1/vmhost/2/'
+    :return:
+    """
+    header={"Content-Type":"application/json; charset=UTF-8",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
+            }
+    data={"vm_installed": 1}
+    response=requests.patch(url,data=json.dumps(data),headers=header)
+    return response.json()
+
+def bash(cmd):
+    obj=subprocess.Popen(cmd,shell=True,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE)
+    stdout_res=obj.stdout.read()
+    stderr_res=obj.stderr.read()
+    return stdout_res,stderr_res
+
+def to_dic(li):
+    """
+    li=['Name:                   jituan-daihouguanli-test-252',]
+    :param li:
+    :return:
+    """
+    new_dic = {}
+    for i in li:
+        if ':' in i:
+            k, v = i.split(':', 1)
+            new_dic[k.strip()] = v.strip()
+    return new_dic
+
+def my_logger():
+    logging.config.dictConfig(settings.LOGGING_CONFIG)
+    logger=logging.getLogger(__name__)
+    return logger
+
+def judgment_on(ip):
+    """
+    判断开机成功并弹出cdrom
+    :param ip:
+    :return:
+    """
+    start='sshpass -p "1234567" ssh -o ConnectTimeout=2 -o StrictHostKeyChecking=no root@%s "/usr/bin/eject"'%ip
+    stdout,stderr=bash(start)
+    logger=my_logger()
+    if stderr:
+        logger.info('%s 虚拟机启动检测中'%ip)
+        return False
+    return True
+
+
+# if __name__ == '__main__':
+#     res=get_args('http://127.0.0.1:8000/api/v1/vmhost/?vm_audit=1&vm_installed=0')
+#     print(res)
+    # res,err=bash("govc about")
+    # res,err=bash('govc about -u "name":"pass"@"ip" -k')
+    # print('out',res.decode('gbk'))
+    # print(err.decode('gbk'))
+    # res=patch_installed('http://127.0.0.1:8000/api/v1/vmhost/3/')
+    # print(res.get("vm_installed"))
