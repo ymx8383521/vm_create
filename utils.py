@@ -3,6 +3,7 @@ import subprocess
 import logging.config
 import settings
 import json
+import os
 
 def get_args(url):
     """
@@ -67,6 +68,21 @@ def judgment_on(ip):
         return False
     return True
 
+# 打包相关
+def set_hostname(ip,vm_name=settings.HOSTNAMEPRE):
+    ks_path=os.path.join(settings.ISO_ROOT,'isolinux','ks.cfg')
+    v1,v2,v3,v4=ip.split('.')
+    hostname=('-').join(vm_name,v2,v3,v4)
+    set_name='sed -i "s/network --hostname=.*/network --hostname=%s/" %s'%(hostname,ks_path)
+    stdout,stderr=bash(set_name)
+    if stderr:
+        raise Exception('设置ks.cfg文件中主机名失败%s'%stderr)
+    return hostname
+
+def set_netsh(ip,gateway):
+    file_path=os.path.join(settings.ISO_ROOT,'init','net.sh')
+    with open(file_path,'w',encoding='utf-8')as f:
+        f.write('echo -e "DEVICE=eth0\nBOOTPROTO=static\nONBOOT=yes\nPREFIX=23\nIPADDR=%s\nGATEWAY=%s\nDNS1=202.206.0.20\n">/mnt/sysimage/etc/sysconfig/network-scripts/ifcfg-eth0'%(ip,gateway))
 
 # if __name__ == '__main__':
 #     res=get_args('http://127.0.0.1:8000/api/v1/vmhost/?vm_audit=1&vm_installed=0')

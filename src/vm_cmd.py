@@ -2,6 +2,7 @@ import settings
 from utils import bash
 from utils import to_dic
 from utils import my_logger
+from utils import set_hostname,set_netsh
 
 
 class AutoVM(object):
@@ -126,6 +127,9 @@ class AutoVM(object):
         isolinux.cfg 指向ks.cfg
         ks.cfg自动安装
         """
+        # 设置ks.cfg中的主机名 生成net.sh脚本
+        set_hostname(self.vm_ip)
+        set_netsh(self.vm_ip,self.vm_gateway)
         pac='genisoimage -v -cache-inodes -joliet-long -R -J -T -V CentOS7 -o %s -c isolinux/boot.cat -b \
                     isolinux/isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -b \
                     images/efiboot.img -no-emul-boot %s'%(settings.ISO_LOCAL,settings.ISO_ROOT)

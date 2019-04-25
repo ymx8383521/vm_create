@@ -11,6 +11,9 @@ ISO_ROOT = '/opt/dvd_iso'
 # 访问的URL
 URL='http://127.0.0.1:8000/api/v1/vmhost/'
 
+# 主机名前缀
+HOSTNAMEPRE='jitua'
+
 #日志配置
 LOGGING_CONFIG={
     "version":1,
