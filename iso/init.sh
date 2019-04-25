@@ -198,9 +198,9 @@ Physical () {
 Virtual () {
     Ulimit
     Kernel
-	Ntp_crond
-	Config_sshd
-	History
+    Ntp_crond
+    Config_sshd
+    History
     Others_vir
 }
 
