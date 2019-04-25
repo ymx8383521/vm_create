@@ -39,8 +39,8 @@ yum -y install genisoimage sshpass
 ```
 genisoimage -v -cache-inodes -joliet-long -R -J -T -V CentOS7 -o "/mnt/CentOS-7-x86_64_my-DVD-1804.iso" -c isolinux/boot.cat -b isolinux/isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -b images/efiboot.img -no-emul-boot /opt/dvd_iso
 ```
-####### 先下载mini版centos镜像文件 挂载拷贝到/opt/dvd_iso
-####### 编辑 isolinux/ks.cfg 自动安装配置文件
-####### 修改isolinux/isolinux.cfg为ks.cfg文件引导
-####### init/init.sh为安装完成后初始脚本设置
-####### init/clean.sh清理init文件夹并重启
+####### 先下载mini版centos镜像文件 挂载拷贝到/opt/dvd_iso  
+####### 编辑 isolinux/ks.cfg 自动安装配置文件  
+####### 修改isolinux/isolinux.cfg为ks.cfg文件引导  
+####### init/init.sh为安装完成后初始脚本设置  
+####### init/clean.sh清理init文件夹并重启  
