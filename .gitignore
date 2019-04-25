@@ -4,7 +4,6 @@ migrations/
 .idea/
 .govmomi/
 src/.govmomi/
-src/iso/*
 settings.py
 logging.json
 *.log
