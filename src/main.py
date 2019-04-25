@@ -11,7 +11,7 @@ def run():
     get_url=settings.URL+'?vm_audit=1&vm_installed=0'
     res=get_args(get_url)
     install_li=res.get('results')
-    print(install_li)
+    logger.debug(install_li)
     if install_li:
         for item in install_li:
             starting=True

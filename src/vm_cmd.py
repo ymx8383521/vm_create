@@ -130,13 +130,13 @@ class AutoVM(object):
         # 设置ks.cfg中的主机名 生成net.sh脚本
         set_hostname(self.vm_ip)
         set_netsh(self.vm_ip,self.vm_gateway)
-        pac='genisoimage -v -cache-inodes -joliet-long -R -J -T -V CentOS7 -o %s -c isolinux/boot.cat -b \
+        pac='genisoimage -quiet -cache-inodes -joliet-long -input-charset utf-8 -R -J -T -V CentOS7 -o %s -c isolinux/boot.cat -b \
                     isolinux/isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -b \
                     images/efiboot.img -no-emul-boot %s'%(settings.ISO_LOCAL,settings.ISO_ROOT)
         stdout,stderr=bash(pac)
         if stderr:
-            self.logger.error('VM_Name: %s 镜像iso打包失败' % (self.vm_name))
-            raise Exception('VM_Name: %s 镜像iso打包失败' % (self.vm_name))
+            self.logger.error('VM_Name: %s 镜像iso打包失败 %s' % (self.vm_name,stderr))
+            raise Exception('VM_Name: %s 镜像iso打包失败 %s' % (self.vm_name,stderr))
         else:
             self.logger.info('VM_Name: %s 镜像iso打包完成' % (self.vm_name))
         return True
@@ -151,8 +151,9 @@ class AutoVM(object):
             mk_folder='govc datastore.mkdir -u  "%s":"%s"@"%s" -k -dc="%s" -ds="%s" iso'\
                       %(settings.VCENTER_USER,settings.VCENTER_PASSWORD,settings.VCENTER_IP,self.dc,self.ds)
             stdout,stderr=bash(mk_folder)
-            if not stderr:
+            if stderr:
                 self.logger.info('机房: %s 数据中心: %s 创建iso文件夹成功' % (self.dc,self.ds))
+                raise Exception('机房: %s 数据中心: %s 创建iso文件夹成功' % (self.dc,self.ds))
         #开始上传iso到文件夹
         self.logger.info('机房: %s 数据中心: %s 开始上传iso文件%s' % (self.dc, self.ds, upload_file))
         upload='govc datastore.upload -u  "%s":"%s"@"%s" -k -dc="%s" -ds="%s" %s %s'\

@@ -1,10 +1,13 @@
+import os
+BASE_DIR=os.path.dirname(os.path.abspath(__file__))
+
 #VCenter账号密码
 VCENTER_USER = ''
 VCENTER_PASSWORD = ''
 VCENTER_IP = ''
 
-ISO_LOCAL = './iso/CentOS-7-x86_64_my-DVD-1810.iso'
-ISO_NONE_LOCAL = './iso/CentOS-7-x86_64_my-DVD-1810_none.iso'
+ISO_LOCAL = os.path.join(BASE_DIR,'./iso/CentOS-7-x86_64_my-DVD-1810.iso')
+ISO_NONE_LOCAL = os.path.join(BASE_DIR,'./iso/CentOS-7-x86_64_my-DVD-1810_none.iso')
 ISO_REMOTE = 'iso/CentOS-7-x86_64_my-DVD-1810.iso'
 ISO_ROOT = '/opt/dvd_iso'
 
