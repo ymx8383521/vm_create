@@ -60,6 +60,8 @@ def judgment_on(ip):
     :param ip:
     :return:
     """
+    del_know='sed -i /%s/d /root/.ssh/known_hosts'%ip
+    bash(del_know)
     start='sshpass -p "1234567" ssh -o ConnectTimeout=2 -o StrictHostKeyChecking=no root@%s "/usr/bin/eject"'%ip
     stdout,stderr=bash(start)
     logger=my_logger()
