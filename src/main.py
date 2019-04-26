@@ -6,9 +6,10 @@ from utils import judgment_on
 import settings
 import time
 
+
 def run():
     logger=my_logger()
-    get_url=settings.URL+'?vm_audit=1&vm_installed=0'
+    get_url= settings.URL + '?vm_audit=1&vm_installed=0'
     res=get_args(get_url)
     install_li=res.get('results')
     logger.debug(install_li)
@@ -16,7 +17,17 @@ def run():
         for item in install_li:
             starting=True
             try:
-                vm_obj=AutoVM(item["room_name"],item["host_ip"],item["datastore"],item["vm_ip"],item["vm_gateway"],item["vm_cpu"],item["vm_memory"],item["vm_disk"],item["vm_name"],item["vm_proposer"],item["id"])
+                if item["room_name"] == 'yi':
+                    vm_obj=AutoVM(settings.FVCENTER_USER,settings.FVCENTER_PASSWORD,settings.FVCENTER_IP,item["room_name"],item["host_ip"],item["datastore"],item["vm_ip"],item["vm_gateway"],item["vm_cpu"],item["vm_memory"],item["vm_disk"],item["vm_name"],item["vm_proposer"],item["id"])
+                elif item["room_name"] == 'two':
+                    vm_obj=AutoVM(settings.TVCENTER_USER,settings.TVCENTER_PASSWORD,settings.TVCENTER_IP,item["room_name"],item["host_ip"],item["datastore"],item["vm_ip"],item["vm_gateway"],item["vm_cpu"],item["vm_memory"],item["vm_disk"],item["vm_name"],item["vm_proposer"],item["id"])
+                elif item["room_name"] == 'san':
+                    vm_obj = AutoVM(settings.SVCENTER_USER, settings.SVCENTER_PASSWORD, settings.SVCENTER_IP,
+                                    item["room_name"], item["host_ip"], item["datastore"], item["vm_ip"],
+                                    item["vm_gateway"], item["vm_cpu"], item["vm_memory"], item["vm_disk"],
+                                    item["vm_name"], item["vm_proposer"], item["id"])
+                else:
+                    raise Exception('机房名称错误')
                 # 创建虚拟机
                 vm_obj.create_VM()
                 # 启用cpu mem热插拔
@@ -29,7 +40,7 @@ def run():
                     # 开机自动安装
                     vm_obj.power_on()
                     # 设置api为已安装
-                    patch_url=settings.URL+'%s/'%item["id"]
+                    patch_url= settings.URL + '%s/' % item["id"]
                     patch_installed(patch_url)
                 # 判断启动成功并断开cdrom
                 while starting:
