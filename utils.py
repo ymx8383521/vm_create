@@ -63,10 +63,12 @@ def judgment_on(ip):
     del_know='sed -i /%s/d /root/.ssh/known_hosts'%ip
     bash(del_know)
     start='sshpass -p "1234567" ssh -o ConnectTimeout=2 -o StrictHostKeyChecking=no root@%s "/usr/bin/eject"'%ip
+    # 为了解决Warning
+    bash(start)
     stdout,stderr=bash(start)
     logger=my_logger()
     if stderr:
-        logger.info('%s 虚拟机启动检测中'%ip)
+        logger.info('%s 虚拟机启动检测中 %s'%(ip,stderr.decode('utf-8')))
         return False
     return True
 
