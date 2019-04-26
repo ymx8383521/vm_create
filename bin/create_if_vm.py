@@ -8,6 +8,6 @@ from utils import bash
 if __name__ == '__main__':
     live='ps -ef |grep "create_vm_start.py"|grep -v grep|wc -l'
     stdout,stderr=bash(live)
-    if stdout.decode('utf-8') == 0:
+    if int(stdout.decode('utf-8')) == 0:
         start='/usr/bin/python3 /export/VMWare_Auto/vm_create/bin/create_vm_start.py &>/dev/null'
         bash(start)

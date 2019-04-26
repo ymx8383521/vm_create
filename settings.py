@@ -28,6 +28,7 @@ URL='http://127.0.0.1:8000/api/v1/vmhost/'
 HOSTNAMEPRE='jitua'
 
 #日志配置
+LOG_PATH=os.path.join(BASE_DIR,'vminfo.log')
 LOGGING_CONFIG={
     "version":1,
     "disable_existing_loggers":False,
@@ -47,7 +48,7 @@ LOGGING_CONFIG={
             "class":"logging.handlers.RotatingFileHandler",
             "level":"INFO",
             "formatter":"simple",
-            "filename":"vminfo.log",
+            "filename":"LOG_PATH",
             "maxBytes":10485760,
             "backupCount":10,
             "encoding":"utf-8"
