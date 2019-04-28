@@ -68,7 +68,7 @@ def judgment_on(ip):
     stdout,stderr=bash(start)
     logger=my_logger()
     if stderr:
-        logger.info('%s 虚拟机启动检测中 %s'%(ip,stderr.decode('utf-8')))
+        logger.info('%s 虚拟机启动检测中 %s'%(ip,stderr.decode('utf-8').strip()))
         return False
     return True
 

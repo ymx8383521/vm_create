@@ -43,11 +43,13 @@ def run():
                     patch_url= settings.URL + '%s/' % item["id"]
                     patch_installed(patch_url)
                 # 判断启动成功并断开cdrom
-                while starting:
+                count=0
+                while starting and count<36:
                     on=judgment_on(item["vm_ip"])
                     if on:
                         vm_obj.connect_cdrom(connect=False)
                         starting=False
+                        count+=1
                     else:
                         time.sleep(10)
                 logger.info('Successful 机房:%s 虚拟机:%s 装机成功'%(item["room_name"],item["vm_name"]))
