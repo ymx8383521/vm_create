@@ -48,7 +48,7 @@ LOGGING_CONFIG={
             "class":"logging.handlers.RotatingFileHandler",
             "level":"INFO",
             "formatter":"simple",
-            "filename":"LOG_PATH",
+            "filename":LOG_PATH,
             "maxBytes":10485760,
             "backupCount":10,
             "encoding":"utf-8"
