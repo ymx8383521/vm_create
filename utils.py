@@ -78,9 +78,9 @@ def set_password(ip):
     ks_path=os.path.join(settings.ISO_ROOT, 'isolinux', 'ks.cfg')
     test=re.match(r'^172.20.*',ip)
     if test:
-        passwd='$1$VSmile07$QfNkkDW8w5oX1rnSj1ezc0'
+        passwd='\$1\$VSmile07\$QfNkkDW8w5oX1rnSj1ezc0'
     else:
-        passwd='$1$VSmile07sdfadf'
+        passwd='\$1\$VSmile07sdfadf.gs'
     set_passwd='sed -i "s/rootpw --iscrypted .*/rootpw --iscrypted %s/" %s'%(passwd,ks_path)
     stdout,stderr=bash(set_passwd)
     if stderr:
