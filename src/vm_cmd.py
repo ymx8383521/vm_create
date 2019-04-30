@@ -2,7 +2,7 @@ import settings
 from utils import bash
 from utils import to_dic
 from utils import my_logger
-from utils import set_hostname,set_netsh
+from utils import set_hostname,set_netsh,set_password
 
 
 class AutoVM(object):
@@ -132,6 +132,7 @@ class AutoVM(object):
         ks.cfg自动安装
         """
         # 设置ks.cfg中的主机名 生成net.sh脚本
+        set_password(self.vm_ip)
         set_hostname(self.vm_ip)
         set_netsh(self.vm_ip,self.vm_gateway)
         pac='genisoimage -quiet -cache-inodes -joliet-long -input-charset utf-8 -R -J -T -V CentOS7 -o %s -c isolinux/boot.cat -b \

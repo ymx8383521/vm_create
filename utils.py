@@ -4,6 +4,7 @@ import logging.config
 import settings
 import json
 import os
+import re
 
 def get_args(url):
     """
@@ -73,6 +74,19 @@ def judgment_on(ip):
     return True
 
 # 打包相关
+def set_password(ip):
+    ks_path=os.path.join(settings.ISO_ROOT, 'isolinux', 'ks.cfg')
+    test=re.match(r'^172.20.*',ip)
+    if test:
+        passwd='$1$VSmile07$QfNkkDW8w5oX1rnSj1ezc0'
+    else:
+        passwd='$1$VSmile07sdfadf'
+    set_passwd='sed -i "s/rootpw --iscrypted .*/rootpw --iscrypted %s/" %s'%(passwd,ks_path)
+    stdout,stderr=bash(set_passwd)
+    if stderr:
+        raise Exception('设置ks.cfg文件中设置密码失败 %s'%stderr)
+    return True
+
 def set_hostname(ip, vm_name=settings.HOSTNAMEPRE):
     ks_path=os.path.join(settings.ISO_ROOT, 'isolinux', 'ks.cfg')
     v1,v2,v3,v4=ip.split('.')

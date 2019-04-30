@@ -5,6 +5,7 @@ migrations/
 .govmomi/
 src/.govmomi/
 logging.json
+iso/CentOS-7-x86_64_my-DVD-1810.iso
 *.log
 *.py[cod]
 *$py.class
