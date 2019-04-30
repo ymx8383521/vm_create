@@ -42,17 +42,17 @@ def run():
                     # 设置api为已安装
                     patch_url= settings.URL + '%s/' % item["id"]
                     patch_installed(patch_url)
-                # 判断启动成功并断开cdrom
-                count=0
-                while starting and count<34:
-                    on=judgment_on(item["vm_ip"])
-                    if on:
-                        vm_obj.connect_cdrom(connect=False)
-                        starting=False
-                    else:
-                        time.sleep(10)
-                        count += 1
-                logger.info('Successful 机房:%s 虚拟机:%s 装机成功'%(item["room_name"],item["vm_name"]))
+                # # 判断启动成功并断开cdrom
+                # count=0
+                # while starting and count<34:
+                #     on=judgment_on(item["vm_ip"])
+                #     if on:
+                #         vm_obj.connect_cdrom(connect=False)
+                #         starting=False
+                #     else:
+                #         time.sleep(10)
+                #         count += 1
+                logger.info('Successful 机房:%s 虚拟机:%s 装机中...请稍后再试'%(item["room_name"],item["vm_name"]))
             except Exception as e:
                 logger.error('机房:%s 虚拟机:%s 装机失败，请查看失败原因并手动删除主机 %s'%(item["room_name"],item["vm_name"],e))
                 continue
