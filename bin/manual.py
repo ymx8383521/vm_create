@@ -5,6 +5,7 @@ from src.vm_cmd import AutoVM
 from utils import get_args
 from utils import my_logger
 from utils import patch_installed
+from utils import bash
 from utils import set_discdrom
 import settings
 import json
@@ -72,4 +73,7 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    live = 'ps -ef |grep "create_vm_start.py"|grep -v grep|wc -l'
+    stdout, stderr = bash(live)
+    if int(stdout.decode('utf-8')) == 0:
+        run()
