@@ -1,0 +1,15 @@
+{"results": [
+  {
+    "id": 20,
+    "vm_name": "v-report-tmp-103-28",
+    "vm_cpu": 4,
+    "vm_memory": 8,
+    "vm_disk": 200,
+    "vm_ip": "172.20.103.28",
+    "vm_gateway": "172.20.102.1",
+    "vm_proposer": "yangmengxue",
+    "host_ip": "172.20.102.38",
+    "room_name": "机房",
+    "datastore": "datastore1 (22)"
+  }
+]}

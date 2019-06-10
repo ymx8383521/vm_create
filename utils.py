@@ -102,6 +102,13 @@ def set_netsh(ip,gateway):
     with open(file_path,'w',encoding='utf-8')as f:
         f.write('echo -e "DEVICE=eth0\\nBOOTPROTO=static\\nONBOOT=yes\\nPREFIX=23\\nIPADDR=%s\\nGATEWAY=%s\\nDNS1=114.114.114.114\\n">/mnt/sysimage/etc/sysconfig/network-scripts/ifcfg-eth0'%(ip,gateway))
 
+def set_discdrom(dc,vm_name):
+    dis_path=os.path.join(settings.ISO_ROOT, 'init', 'clean.sh')
+    set_discmd='sed -i "s#python3 /export/VMWare_Auto/vm_create/bin/discdrom.py .*#python3 /export/VMWare_Auto/vm_create/bin/discdrom.py  %s %s\\"#" %s'%(dc,vm_name,dis_path)
+    stdout,stderr=bash(set_discmd)
+    if stderr:
+        raise Exception('设置clean.sh文件中断开cdrom失败%s'%stderr)
+
 # if __name__ == '__main__':
 #     res=get_args('http://127.0.0.1:8000/api/v1/vmhost/?vm_audit=1&vm_installed=0')
 #     print(res)
