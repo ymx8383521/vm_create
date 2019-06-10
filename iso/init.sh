@@ -156,6 +156,14 @@ PROMPT_COMMAND='history -a;history -w'
         source /etc/profile.d/history.sh
 }
 
+#配置jarctl
+Jarctl () {
+        cp -rf /root/init/jarctl.sh /export/script/jarctl.sh
+        ln -s /export/script/jarctl.sh /usr/sbin/jarctl
+        chmod +x /export/script/jarctl.sh
+        chmod u+s /usr/sbin/jarctl
+}
+
 # 其他优化phy
 Others_phy () {
 	chmod +x /etc/rc.d/rc.local
@@ -180,6 +188,7 @@ Physical () {
 	Ntp_crond
 	Config_sshd
 	History
+	Jarctl
 	Others_phy
 }
 
@@ -191,6 +200,7 @@ Virtual () {
     Ntp_crond
     Config_sshd
     History
+    Jarctl
     Others_vir
 }
 
