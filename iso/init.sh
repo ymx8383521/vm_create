@@ -145,10 +145,10 @@ Config_sshd () {
 #配置history
 History () {
         cat >> /etc/profile.d/history.sh << -EOF
-STTIMEFORMAT="%F %T `whoami`"
+STTIMEFORMAT="%F %T \`whoami\`"
 HISTFILESIZE=10000
 HISTSIZE=2000
-HISTFILE=/var/log/.commandline_warrior
+HISTFILE=~/.commandline_warrior
 shopt -s histappend
 PROMPT_COMMAND='history -a;history -w'
 -EOF
