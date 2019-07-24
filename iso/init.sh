@@ -24,6 +24,8 @@ Install_pack () {
 	wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 	wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
 	wget -O /etc/yum.repos.d/docker-ce.repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+	sed -i 's+http://mirrors.*.com+https://mirrors.tuna.tsinghua.edu.cn+' /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/epel.repo
+	sed -i 's+mirrors.aliyun.com+mirrors.tuna.tsinghua.edu.cn+' /etc/yum.repos.d/docker-ce.repo
 }
 
 
