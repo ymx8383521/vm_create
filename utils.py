@@ -75,6 +75,10 @@ def judgment_on(ip):
 
 # 打包相关
 def set_password(ip):
+    """
+    # 生成123456的密码
+    perl -e "print crypt('123456','\$1\$VSmile07')"
+    """
     ks_path=os.path.join(settings.ISO_ROOT, 'isolinux', 'ks.cfg')
     test=re.match(r'^172.20.*',ip)
     if test:
